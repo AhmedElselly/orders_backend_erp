@@ -23,6 +23,10 @@ export class InMemoryOrderRepository extends OrderRepository {
     return this.orders.find((order) => order.id === id) || null;
   }
 
+  async findAll(): Promise<Order[] | null> {
+    return this.orders || null;
+  }
+
   async create(order: Order): Promise<void> {
     this.orders.push(order);
   }
