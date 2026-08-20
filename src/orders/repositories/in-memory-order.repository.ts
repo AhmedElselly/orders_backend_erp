@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { Order } from '../types/order.type';
-import { OrderRepository } from './order.repository';
+import { Order, OrderStatus } from '../types/order.type';
+import type { OrderRepository } from './order.repository';
 
 @Injectable()
-export class InMemoryOrderRepository extends OrderRepository {
+export class InMemoryOrderRepository implements OrderRepository {
   private orders: Order[] = [
     {
       id: '1',
-      customer: 'Ahmed',
+      customer: 'Ahmed111',
       total: 500,
-      status: 'PENDING',
+      status: OrderStatus.PENDING,
     },
     {
       id: '2',
       customer: 'John',
       total: 750,
-      status: 'COMPLETED',
+      status: OrderStatus.COMPLETED,
     },
   ];
 
@@ -24,11 +24,18 @@ export class InMemoryOrderRepository extends OrderRepository {
   }
 
   async findAll(): Promise<Order[] | null> {
+    console.log({ orders: this.orders });
     return this.orders || null;
   }
 
   async create(order: Order): Promise<void> {
-    this.orders.push(order);
+    const newOrder: Order = {
+      id: Date.now().toString(),
+      customer: order.customer,
+      total: order.total,
+      status: order.status,
+    };
+    this.orders.push(newOrder);
   }
 
   async update(order: Order): Promise<void> {

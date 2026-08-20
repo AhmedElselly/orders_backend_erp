@@ -1,9 +1,11 @@
 import { Order } from '../types/order.type';
 
-export abstract class OrderRepository {
-  abstract findById(id: string): Promise<Order | null>;
-  abstract findAll(): Promise<Order[] | null>;
-  abstract create(order: Order): Promise<void>;
-  abstract update(order: Order): Promise<void>;
-  abstract delete(id: string): Promise<void>;
+// import { Order } from '../entities/order.entity';
+
+export interface OrderRepository {
+  findById(id: string): Promise<Order | null>;
+  findAll(): Promise<Order[] | null>;
+  create(order: Omit<Order, 'id'>): Promise<void>;
+  update(order: Order): Promise<void>;
+  delete(id: string): Promise<void>;
 }
