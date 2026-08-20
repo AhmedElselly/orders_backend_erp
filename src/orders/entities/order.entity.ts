@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { OrderStatus } from '../types/order.type';
 
 @Entity('orders')
@@ -17,4 +22,7 @@ export class OrderEntity {
     enum: OrderStatus,
   })
   status!: OrderStatus;
+
+  @CreateDateColumn()
+  createdAt!: Date;
 }

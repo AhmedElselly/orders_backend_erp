@@ -16,7 +16,11 @@ export class PostgresOrderRepository {
   }
 
   async findAll(): Promise<Order[] | null> {
-    return this.repository.find();
+    return this.repository.find({
+      order: {
+        createdAt: 'DESC',
+      },
+    });
   }
 
   async findById(id: string): Promise<Order | null> {
